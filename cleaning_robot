@@ -1,0 +1,47 @@
+<?php
+
+try {
+
+    // setting options and input/output files
+    $optind = null;
+    $options = getopt("f:cp:",[],$optind);
+    $pos_args = array_slice($argv, $optind);
+
+    if (!file_exists("./$pos_args[0]")) {
+        throw new InvalidArgumentException(
+            "The file $pos_args[0] does not exists"
+        );
+    }
+
+    // Read JSON file
+    $json = file_get_contents("./$pos_args[0]");
+    // Decode JSON
+    $json_data = json_decode($json,true);
+
+    // Check if JSON is valid
+    if(is_null($json_data)){
+        echo "The json is not valid\n";
+        die;
+    }
+
+    include_once('CleaningRobot.php');
+
+    // Setting the robot and start the commands
+    $myqRobot = new CleaningRobot($json_data);
+    $myqRobot->executeCommands();
+
+    $result = array('visited'=>$myqRobot->getVisited(),
+                    'cleaned'=>$myqRobot->getCleaned(),
+                    'final'=>$myqRobot->getFinalPosition(),
+                    'battery'=>$myqRobot->getBattery());
+
+    // Write to JSON file
+    $fp = fopen("$pos_args[1]", 'w');
+    fwrite($fp, json_encode($result));
+    fclose($fp);
+
+}catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+
