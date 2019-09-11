@@ -70,21 +70,21 @@ class CleaningRobot
      */
     public function __construct($inputData)
     {
-            $this->validateOptions();
-            $validatedInput = $this->validateInput($inputData);
+        $this->validateOptions();
+        $validatedInput = $this->validateInput($inputData);
 
-            $this->setMap($validatedInput['map']);
-            $this->setPosition($validatedInput['position']);
-            $this->setFacing($validatedInput['facing']);
-            $this->setBattery($validatedInput['battery']);
-            $this->setCommands($validatedInput['commands']);
-            $this->setVisited($validatedInput['position']);
+        $this->setMap($validatedInput['map']);
+        $this->setPosition($validatedInput['position']);
+        $this->setFacing($validatedInput['facing']);
+        $this->setBattery($validatedInput['battery']);
+        $this->setCommands($validatedInput['commands']);
+        $this->setVisited($validatedInput['position']);
     }
 
     /**
      * @return array
      */
-    public function getMap()
+    public function getMap(): array
     {
         return $this->map;
     }
@@ -92,7 +92,7 @@ class CleaningRobot
     /**
      * @param array $map
      */
-    public function setMap($map)
+    public function setMap(array $map)
     {
         $this->map = $map;
     }
@@ -100,7 +100,7 @@ class CleaningRobot
     /**
      * @return array
      */
-    public function getVisited()
+    public function getVisited(): array
     {
         return $this->visited;
     }
@@ -108,7 +108,7 @@ class CleaningRobot
     /**
      * @param array $visited
      */
-    public function setVisited($visited)
+    public function setVisited(array $visited)
     {
         $this->visited = [$visited];
     }
@@ -125,7 +125,7 @@ class CleaningRobot
     /**
      * @return array
      */
-    public function getCleaned()
+    public function getCleaned(): array
     {
         return $this->cleaned;
     }
@@ -133,7 +133,7 @@ class CleaningRobot
     /**
      * @param array $cleaned
      */
-    public function setCleaned($cleaned)
+    public function setCleaned(array $cleaned)
     {
         $this->cleaned = $cleaned;
     }
@@ -141,7 +141,7 @@ class CleaningRobot
     /**
      * @param array $newCleaned
      */
-    public function addToCleaned($newCleaned)
+    public function addToCleaned(array $newCleaned)
     {
         if(!in_array($newCleaned, $this->cleaned))
             array_push($this->cleaned,$newCleaned);
@@ -150,7 +150,7 @@ class CleaningRobot
     /**
      * @return array
      */
-    public function getPosition()
+    public function getPosition(): array
     {
         return $this->position;
     }
@@ -158,7 +158,7 @@ class CleaningRobot
     /**
      * @param array $position
      */
-    public function setPosition($position)
+    public function setPosition(array $position)
     {
         $this->position = $position;
     }
@@ -166,7 +166,7 @@ class CleaningRobot
     /**
      * @return int
      */
-    public function getBattery()
+    public function getBattery(): int
     {
         return $this->battery;
     }
@@ -174,7 +174,7 @@ class CleaningRobot
     /**
      * @param int $battery
      */
-    public function setBattery($battery)
+    public function setBattery(int $battery)
     {
         $this->battery = $battery;
     }
@@ -182,7 +182,7 @@ class CleaningRobot
     /**
      * @return array
      */
-    public function getCommands()
+    public function getCommands(): array
     {
         return $this->commands;
     }
@@ -190,7 +190,7 @@ class CleaningRobot
     /**
      * @param array $commands
      */
-    public function setCommands($commands)
+    public function setCommands(array $commands)
     {
         $this->commands = $commands;
     }
@@ -198,21 +198,21 @@ class CleaningRobot
     /**
      * @return string
      */
-    public function getFacing()
+    public function getFacing(): string
     {
         return $this->facing;
     }
     /**
      * @return string
      */
-    public function getBackOffTriggered()
+    public function getBackOffTriggered():string
     {
         return $this->backOffTriggered;
     }
     /**
      * @return array
      */
-    public function getFinalPosition()
+    public function getFinalPosition(): array
     {
         $finalPosition = $this->getPosition();
         $finalPosition['facing'] = $this->getFacing();
@@ -222,7 +222,7 @@ class CleaningRobot
     /**
      * @return boolean
      */
-    public function getOutOfBattery()
+    public function getOutOfBattery(): bool
     {
         return $this->outOfBattery;
     }
@@ -230,7 +230,7 @@ class CleaningRobot
     /**
      * @return boolean
      */
-    public function getStuck()
+    public function getStuck(): bool
     {
         return $this->stuck;
     }
@@ -238,7 +238,7 @@ class CleaningRobot
     /**
      * @param string $facing
      */
-    public function setFacing($facing)
+    public function setFacing(string $facing)
     {
         $this->facing = $facing;
     }
@@ -252,7 +252,7 @@ class CleaningRobot
      * @return array
      * @throws \http\Exception\InvalidArgumentException
      */
-    private function validateInput($inputData){
+    private function validateInput(array $inputData): array{
 
         // TODO make validation for the map array
 
@@ -302,7 +302,7 @@ class CleaningRobot
     /**
      * @return boolean
      */
-    private function validateOptions(){
+    private function validateOptions():bool {
 
 
 
@@ -327,14 +327,14 @@ class CleaningRobot
     /**
      * @param string $commandLogMsg
      */
-    public function writeToConsole($commandLogMsg){
+    public function writeToConsole(string $commandLogMsg){
         if($this->options['writeToConsole'])
             echo $commandLogMsg;
     }
     /**
      * @param string $commandLogMsg
      */
-    public function writeToLog($commandLogMsg){
+    public function writeToLog(string $commandLogMsg){
         if($this->options['writeToLog'])
             error_log ($commandLogMsg, 3, $this->logFile);
     }
@@ -343,7 +343,7 @@ class CleaningRobot
      * Turn the robot left and consume battery by 1
      * @return bool
      */
-    public function TL(){
+    public function TL():bool {
         if($this->getBattery()<1)
             return false;
         $this->setFacing(self::DIRECTIONS[((array_search($this->getFacing(), self::DIRECTIONS))+3)%4]);
@@ -352,7 +352,7 @@ class CleaningRobot
         //logging
         $commandLogMsg = "Turn Left to ".$this->getFacing()."\n";
         $this->writeToConsole($commandLogMsg);
-        $this->writeToLog($commandLogMsg, 3, $this->logFile);
+        $this->writeToLog($commandLogMsg);
         return true;
     }
 
@@ -362,7 +362,7 @@ class CleaningRobot
      * @return bool
      * @throws Exception if Robot Stuck
      */
-    public function A(){
+    public function A():bool {
         if($this->battery < 2)
             return false;
         $this->setBattery($this->getBattery()-2);
@@ -375,7 +375,7 @@ class CleaningRobot
             //logging
             $commandLogMsg = "Advance ".$nextForward['X'].','.$nextForward['Y']."\n";
             $this->writeToConsole($commandLogMsg);
-            $this->writeToLog($commandLogMsg, 3, $this->logFile);
+            $this->writeToLog($commandLogMsg);
         }
         elseif(!$this->backOff()){
             $this->stuck = true;
@@ -383,7 +383,7 @@ class CleaningRobot
             //logging
             $commandLogMsg = 'stuck';
             $this->writeToConsole($commandLogMsg);
-            $this->writeToLog($commandLogMsg, 3, $this->logFile);
+            $this->writeToLog($commandLogMsg);
             throw new Exception(
                 'Robot Stuck'
             );
@@ -408,7 +408,7 @@ class CleaningRobot
      * clean area by robot and consume battery by 5
      * @return bool
      */
-    public function C(){
+    public function C():bool {
         if($this->battery < 5)
             return false;
         $this->setBattery($this->getBattery()-5);
@@ -417,7 +417,7 @@ class CleaningRobot
         //logging
         $commandLogMsg = "Clean ".$this->getPosition()['X'].','.$this->getPosition()['Y']."\n";
         $this->writeToConsole($commandLogMsg);
-        $this->writeToLog($commandLogMsg, 3, $this->logFile);
+        $this->writeToLog($commandLogMsg);
         return true;
     }
 
@@ -425,7 +425,7 @@ class CleaningRobot
      * Turn the robot right and consume battery by 1
      * @return bool
      */
-    public function TR(){
+    public function TR():bool {
         if($this->getBattery()<1)
             return false;
         $this->setFacing(self::DIRECTIONS[((array_search($this->getFacing(), self::DIRECTIONS))+1)%4]);
@@ -434,7 +434,7 @@ class CleaningRobot
         //logging
         $commandLogMsg = "Turn right to ".$this->getFacing()."\n";
         $this->writeToConsole($commandLogMsg);
-        $this->writeToLog($commandLogMsg, 3, $this->logFile);
+        $this->writeToLog($commandLogMsg);
         return true;
     }
 
@@ -443,7 +443,7 @@ class CleaningRobot
      * if there is any block back the robot off
      * @return bool
      */
-    public function B(){
+    public function B():bool {
         if($this->battery < 3)
             return false;
         while(!$nextBackward = $this->getNextBackward())
@@ -458,7 +458,7 @@ class CleaningRobot
         //logging
         $commandLogMsg = "Back ".$nextBackward['X'].','.$nextBackward['Y']."\n";
         $this->writeToConsole($commandLogMsg);
-        $this->writeToLog($commandLogMsg, 3, $this->logFile);
+        $this->writeToLog($commandLogMsg);
         return true;
     }
 
@@ -472,19 +472,19 @@ class CleaningRobot
         {
             case 'N':
                 $pos['Y']--;
-            break;
+                break;
 
             case 'E':
                 $pos['X']++;
-            break;
+                break;
 
             case 'S':
                 $pos['Y']++;
-            break;
+                break;
 
             case 'W':
                 $pos['X']--;
-            break;
+                break;
         }
 
         $nextForward = $this->getMap()[$pos['Y']][$pos['X']]??'null';
@@ -505,19 +505,19 @@ class CleaningRobot
         {
             case 'N':
                 $pos['Y']++;
-            break;
+                break;
 
             case 'E':
                 $pos['X']--;
-            break;
+                break;
 
             case 'S':
                 $pos['Y']--;
-            break;
+                break;
 
             case 'W':
                 $pos['X']++;
-            break;
+                break;
         }
 
         $nextBackward = $this->getMap()[$pos['Y']][$pos['X']]??'null';
@@ -533,13 +533,13 @@ class CleaningRobot
      * back the robot off in case of obstacle
      * @return bool
      */
-    public function backOff(){
+    public function backOff():bool {
         $this->backOffTriggered++;
 
         //logging
         $commandLogMsg = "Back Off:\n";
         $this->writeToConsole($commandLogMsg);
-        $this->writeToLog($commandLogMsg, 3, $this->logFile);
+        $this->writeToLog($commandLogMsg);
 
         include_once ('BackOffStrategy.php');
         $backOffStrategy = new StrategyContext();
@@ -556,7 +556,7 @@ class CleaningRobot
                 //logging
                 $commandLogMsg = ' Battery is out ';
                 $this->writeToConsole($commandLogMsg);
-                $this->writeToLog($commandLogMsg, 3, $this->logFile);
+                $this->writeToLog($commandLogMsg);
 
                 break;
             }

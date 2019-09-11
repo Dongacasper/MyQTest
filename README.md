@@ -1,6 +1,6 @@
 # MyQTest
 
-#Cammands to start celaning:
+#Commands to start cleaning:
 
 1) Simple command:
 php cleaning_robot test1.json result1.json

@@ -10,9 +10,9 @@ class CleaningRobotTest extends TestCase
     {
         include_once('CleaningRobot.php');
         $inputDataWithoutMap = array('maps' => [["C", "S", "S", "S"],["S", "C", "S", "C"],["S", "S", "S", "S"],["S", "null", "S", "S"]],
-                                    'start' => ['X' => 3, 'Y' => 0, 'facing' => 'W'],
-                                    'commands' => [ "TR","A","C","A","C","TR","B","C","B","C","B","C"],
-                                    'battery' => 1094);
+            'start' => ['X' => 3, 'Y' => 0, 'facing' => 'W'],
+            'commands' => [ "TR","A","C","A","C","TR","B","C","B","C","B","C"],
+            'battery' => 1094);
 
 
         $this->expectExceptionMessage('Invalid Input: Missing Map');
@@ -24,8 +24,8 @@ class CleaningRobotTest extends TestCase
     {
         include_once('CleaningRobot.php');
         $inputDataWithoutStart = array('map' => [["C", "S", "S", "S"],["S", "C", "S", "C"],["S", "S", "S", "S"],["S", "null", "S", "S"]],
-                                        'commands' => [ "TR","A","C","A","C","TR","B","C","B","C","B","C"],
-                                        'battery' => 1094);
+            'commands' => [ "TR","A","C","A","C","TR","B","C","B","C","B","C"],
+            'battery' => 1094);
 
 
         $this->expectExceptionMessage('Invalid Input: Missing Start');
@@ -51,9 +51,9 @@ class CleaningRobotTest extends TestCase
 
         include_once('CleaningRobot.php');
         $inputDataWithoutNoPosition = array('map' => [["C", "S", "S", "S"],["S", "C", "S", "C"],["S", "S", "S", "S"],["S", "null", "S", "S"]],
-                                        'start' => ['facing' => 'W'],
-                                        'commands' => [ "TR","A","C","A","C","TR","B","C","B","C","B","C"],
-                                        'battery' => 1094);
+            'start' => ['facing' => 'W'],
+            'commands' => [ "TR","A","C","A","C","TR","B","C","B","C","B","C"],
+            'battery' => 1094);
 
         $myqRobot = new CleaningRobot($inputDataWithoutNoPosition);
         $result = $myqRobot->getPosition();
@@ -68,9 +68,9 @@ class CleaningRobotTest extends TestCase
 
         include_once('CleaningRobot.php');
         $inputDataWithoutNoFacing = array('map' => [["C", "S", "S", "S"],["S", "C", "S", "C"],["S", "S", "S", "S"],["S", "null", "S", "S"]],
-                                        'start' => ['X' => 3, 'Y' => 0],
-                                        'commands' => [ "TR","A","C","A","C","TR","B","C","B","C","B","C"],
-                                        'battery' => 1094);
+            'start' => ['X' => 3, 'Y' => 0],
+            'commands' => [ "TR","A","C","A","C","TR","B","C","B","C","B","C"],
+            'battery' => 1094);
 
         $myqRobot = new CleaningRobot($inputDataWithoutNoFacing);
         $result = $myqRobot->getFacing();
@@ -85,9 +85,9 @@ class CleaningRobotTest extends TestCase
 
         include_once('CleaningRobot.php');
         $inputDataWithoutNoFacing = array('map' => [["S", "S", "S", "S"],["S", "C", "S", "C"],["S", "S", "S", "S"],["S", "null", "S", "S"]],
-                                        'start' => ['X' => 3, 'Y' => 0, 'facing' => 'W'],
-                                        'commands' => ["C"],
-                                        'battery' => 4);
+            'start' => ['X' => 3, 'Y' => 0, 'facing' => 'W'],
+            'commands' => ["C"],
+            'battery' => 4);
 
         $myqRobot = new CleaningRobot($inputDataWithoutNoFacing);
         $myqRobot->executeCommands();
@@ -96,6 +96,7 @@ class CleaningRobotTest extends TestCase
         $this->assertEquals($expected, $result);
 
     }
+
     public function testStuck()
     {
         $expected = true;
@@ -103,9 +104,9 @@ class CleaningRobotTest extends TestCase
         $this->expectExceptionMessage('Robot Stuck');
         include_once('CleaningRobot.php');
         $inputDataWithoutNoFacing = array('map' => [["C", "S", "C", "S"],["S", "C", "S", "C"],["S", "S", "S", "S"],["S", "null", "S", "S"]],
-                                        'start' => ['X' => 3, 'Y' => 0, 'facing' => 'W'],
-                                        'commands' => ["A"],
-                                        'battery' => 4);
+            'start' => ['X' => 3, 'Y' => 0, 'facing' => 'W'],
+            'commands' => ["A"],
+            'battery' => 4);
 
         $myqRobot = new CleaningRobot($inputDataWithoutNoFacing);
         $myqRobot->executeCommands();
@@ -114,15 +115,16 @@ class CleaningRobotTest extends TestCase
         $this->assertEquals($expected, $result);
 
     }
+
     public function testBackOffTriggered1T()
     {
         $expected = 1;
 
         include_once('CleaningRobot.php');
         $inputDataWithoutNoFacing = array('map' => [["S", "S", "S", "S"],["S", "C", "S", "C"],["S", "S", "S", "S"],["S", "null", "S", "S"]],
-                                        'start' => ['X' => 3, 'Y' => 0, 'facing' => 'W'],
-                                        'commands' => ["TL","A","C"],
-                                        'battery' => 40);
+            'start' => ['X' => 3, 'Y' => 0, 'facing' => 'W'],
+            'commands' => ["TL","A","C"],
+            'battery' => 40);
         $myqRobot = new CleaningRobot($inputDataWithoutNoFacing);
         $myqRobot->executeCommands();
 
@@ -137,9 +139,9 @@ class CleaningRobotTest extends TestCase
 
         include_once('CleaningRobot.php');
         $inputDataWithoutNoFacing = array('map' => [["S", "S", "S", "S"],["S", "C", "S", "C"],["S", "S", "S", "S"],["S", "null", "S", "S"]],
-                                        'start' => ['X' => 2, 'Y' => 0, 'facing' => 'W'],
-                                        'commands' => ["TR","A","C","A","C"],
-                                        'battery' => 40);
+            'start' => ['X' => 2, 'Y' => 0, 'facing' => 'W'],
+            'commands' => ["TR","A","C","A","C"],
+            'battery' => 40);
         $myqRobot = new CleaningRobot($inputDataWithoutNoFacing);
         $myqRobot->executeCommands();
 

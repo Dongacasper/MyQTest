@@ -61,7 +61,7 @@ class StrategyContext {
      * @param CleaningRobot $cleaningRobot
      * @return bool
      */
-    public function backOff(CleaningRobot $cleaningRobot) {
+    public function backOff(CleaningRobot $cleaningRobot):bool {
         do {
             $status = $this->strategy->backOff($cleaningRobot);
             $this->nextStrategy();
@@ -76,7 +76,7 @@ class StrategyContext {
 }
 
 interface StrategyInterface {
-    public function backOff($cleaningRobot);
+    public function backOff(CleaningRobot $cleaningRobot):bool ;
 }
 
 class backOffStrategy1 implements StrategyInterface {
@@ -85,10 +85,11 @@ class backOffStrategy1 implements StrategyInterface {
     /**
      * Strategy 1
      * TR A TL
-     * @param $cleaningRobot
+     * @param CleaningRobot $cleaningRobot
      * @return bool
+     * @throws Exception
      */
-    public function backOff($cleaningRobot) {
+    public function backOff(CleaningRobot $cleaningRobot):bool {
         $cleaningRobot->writeToConsole("\n ------backOffStrategy1 start------ \n");
         $cleaningRobot->TR();
         if($cleaningRobot->getNextForward()){
@@ -107,8 +108,9 @@ class backOffStrategy2 implements StrategyInterface {
      * TR A TR
      * @param $cleaningRobot
      * @return bool
+     * @throws Exception
      */
-    public function backOff($cleaningRobot) {
+    public function backOff(CleaningRobot $cleaningRobot):bool {
         $cleaningRobot->writeToConsole("\n ------backOffStrategy2 start------ \n");
         $cleaningRobot->TR();
         if($cleaningRobot->getNextForward()){
@@ -127,8 +129,9 @@ class backOffStrategy3 implements StrategyInterface {
      * TR A TR
      * @param $cleaningRobot
      * @return bool
+     * @throws Exception
      */
-    public function backOff($cleaningRobot) {
+    public function backOff(CleaningRobot $cleaningRobot):bool {
         $cleaningRobot->writeToConsole("\n ------backOffStrategy3 start------ \n");
         $cleaningRobot->TR();
         if($cleaningRobot->getNextForward()){
@@ -147,8 +150,10 @@ class backOffStrategy4 implements StrategyInterface {
      * TR B TR A
      * @param $cleaningRobot
      * @return bool
+     * @throws Exception
+     *
      */
-    public function backOff($cleaningRobot) {
+    public function backOff(CleaningRobot $cleaningRobot):bool {
         $cleaningRobot->writeToConsole("\n ------backOffStrategy4 start------ \n");
         $cleaningRobot->TR();
         if($cleaningRobot->getNextBackward()){
@@ -171,8 +176,9 @@ class backOffStrategy5 implements StrategyInterface {
      * TL TL A
      * @param $cleaningRobot
      * @return bool
+     * @throws Exception
      */
-    public function backOff($cleaningRobot) {
+    public function backOff(CleaningRobot $cleaningRobot):bool {
         $cleaningRobot->writeToConsole("\n ------backOffStrategy5 start------ \n");
         $cleaningRobot->TL();
         $cleaningRobot->TL();
